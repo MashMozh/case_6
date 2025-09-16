@@ -13,7 +13,7 @@ def sentences_in_text(line):
     marks = [".", "?", "!"]
     for i in range(1, len(line)):
         if (line[i] in marks) + (line[i - 1].isalpha()) == 2:
-           k += 1
+            k += 1
     return k
 
 
@@ -53,7 +53,7 @@ def delete_u(word):
     i = 0
     while i < len(word) - 2:
         if word[i] == 'g' and word[i + 1] == 'u' and word[i + 2] in vowels_en:
-            word = word[:i+1] + word[i + 2:]
+            word = word[:i + 1] + word[i + 2:]
         i += 1
     return word
 
