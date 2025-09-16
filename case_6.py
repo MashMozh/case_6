@@ -24,7 +24,7 @@ def count_words(word):
 
 
 def word_vowel(syllable):
-    """The function counts the number of syllables in the text."""
+    """Counts the number of syllables if the text is in Russian."""
     vowels_ru = ["а", "у", "ё", "е", "ы", "о", "э", "я", "и", "ю"]
     words_register = syllable.lower().split()
     cnt_syllable = 0
@@ -36,6 +36,10 @@ def word_vowel(syllable):
 
 
 def ending_e(word):
+    """The following 6 functions allow you to count the number of syllables in a text in English.
+
+    In words ending with the letter 'e' before a consonant other than 'l'?
+    The letter 'e' is not heard, so we remove it"""
     if len(word) > 3 and word[-1] == 'e' and word[-2] != 'l' and word[-2] not in vowels_en:
         word = word[:-1]
     elif len(word) == 3 and word[0] in vowels_en and word[-1] == 'e':
@@ -44,12 +48,14 @@ def ending_e(word):
 
 
 def starting_y(word):
+    """The letter 'y' at the beginning of a word is pronounced as a consonant"""
     if word[0] == 'y':
         word = 'j' + word[1:]
     return word
 
 
 def delete_u(word):
+    """Remove the letter 'u' because it is not visible in the position after G"""
     i = 0
     while i < len(word) - 2:
         if word[i] == 'g' and word[i + 1] == 'u' and word[i + 2] in vowels_en:
@@ -59,6 +65,7 @@ def delete_u(word):
 
 
 def with_ld_nd(word):
+    """The following 2 functions: individual letter combinations, allocated in a separate string"""
     if 'ld' in word:
         word = word.replace('ld','lid')
     if 'nd' in word:
@@ -197,5 +204,6 @@ def main():
     print("\n".join(polarity_and_objectivity(text)))
 
 
-if name == '__main__':
+if __name__ == '__main__':
     main()
+    
