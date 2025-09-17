@@ -49,14 +49,14 @@ def ending_e(word):
 
 
 def starting_y(word):
-    """The letter 'y' at the beginning of a word is pronounced as a consonant"""
+    """The letter 'y' at the beginning of a word is pronounced as a consonant."""
     if word[0] == 'y':
         word = 'j' + word[1:]
     return word
 
 
 def delete_u(word):
-    """Remove the letter 'u' because it is not visible in the position after G"""
+    """Remove the letter 'u' because it is not visible in the position after G."""
     i = 0
     while i < len(word) - 2:
         if word[i] == 'g' and word[i + 1] == 'u' and word[i + 2] in vowels_en:
@@ -66,7 +66,7 @@ def delete_u(word):
 
 
 def with_ld_nd(word):
-    """The following 2 functions: individual letter combinations, allocated in a separate string"""
+    """The following 2 functions: individual letter combinations, allocated in a separate string."""
     if 'ld' in word:
         word = word.replace('ld', 'lid')
     if 'nd' in word:
