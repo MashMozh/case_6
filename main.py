@@ -213,6 +213,5 @@ vowels_en = ['e', 'u', 'y', 'o', 'a', 'i']
 average_sentences = count_words(text) / sentences_in_text(text)
 
 
-
 if __name__ == '__main__':
     main()
