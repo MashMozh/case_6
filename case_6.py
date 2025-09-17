@@ -193,7 +193,7 @@ def polarity_and_objectivity(text):
     subjectivity = TextBlob(eng_text).sentiment.subjectivity
     objectivity = round((1 - subjectivity) * 100, 2)
 
-    if round(polarity) > 0:
+    if round(polarity) > :
         tonality = f"{lcl.POSITIVE}"
     elif round(polarity) == 0:
         tonality = f"{lcl.NEUTRAL}"
