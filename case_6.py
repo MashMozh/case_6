@@ -1,4 +1,4 @@
-#Part of a case-study #6: Text Analysis
+# Part of a case-study #6: Text Analysis
 # Developers: Lagoda K., Zheravina A., Pinoeva K., Mozhaitseva M.
 
 
@@ -40,6 +40,7 @@ def ending_e(word):
 
     In words ending with the letter 'e' before a consonant other than 'l'?
     The letter 'e' is not heard, so we remove it"""
+    vowels_en = ['e', 'u', 'y', 'o', 'a', 'i']
     if len(word) > 3 and word[-1] == 'e' and word[-2] != 'l' and word[-2] not in vowels_en:
         word = word[:-1]
     elif len(word) == 3 and word[0] in vowels_en and word[-1] == 'e':
@@ -67,7 +68,7 @@ def delete_u(word):
 def with_ld_nd(word):
     """The following 2 functions: individual letter combinations, allocated in a separate string"""
     if 'ld' in word:
-        word = word.replace('ld','lid')
+        word = word.replace('ld', 'lid')
     if 'nd' in word:
         word = word.replace('nd', 'nid')
     return word
@@ -92,43 +93,43 @@ def two_vowels(word):
             i += 1
     return word
 
+vowels_en = ['e', 'u', 'y', 'o', 'a', 'i']
 
 def count_syllable(text):
     syllable = 0
     for letter in ''.join(text):
-       if letter in vowels_en:
+        if letter in vowels_en:
             syllable += 1
     return syllable
 
 
 text = input()
 words = text.lower().split()
-vowels_en = ['e', 'u', 'y', 'o', 'a', 'i']
 
 
-without_e = []
-for word in words:
-    without_e.append(ending_e(word))
+def english_syllable(word):
+    without_e = []
+    for word in words:
+        without_e.append(ending_e(word))
 
-without_e_y = []
-for word in without_e:
-    without_e_y.append(starting_y(word))
+    without_e_y = []
+    for word in without_e:
+        without_e_y.append(starting_y(word))
 
-without_e_y_u = []
-for word in without_e_y:
-    without_e_y_u.append(delete_u(word))
+    without_e_y_u = []
+    for word in without_e_y:
+        without_e_y_u.append(delete_u(word))
 
-with_i = []
-for word in without_e_y_u:
-    with_i.append(with_ld_nd(word))
+    with_i = []
+    for word in without_e_y_u:
+        with_i.append(with_ld_nd(word))
 
-without_two_vowel = []
-for word in with_i:
-    without_two_vowel.append(two_vowels(word))
+    without_two_vowel = []
+    for word in with_i:
+        without_two_vowel.append(two_vowels(word))
+    new_text = without_two_vowel
 
-new_text = without_two_vowel
-
-average_sentences = count_words(text) / sentences_in_text(text)
+    return new_text
 
 
 def language(x):
@@ -142,12 +143,21 @@ def language(x):
     return text_language
 
 
+def syllable_en_rus(word):
+    if language(word) == "russian":
+        return word_vowel(word)
+    else:
+        return count_syllable(english_syllable(text))
+
+
 def average_len(word):
     """The function counts the average length of a word in syllables."""
     if language(word) == "russian":
         return word_vowel(text) / count_words(text)
     else:
-        return count_syllable(new_text) / len(new_text)
+        return count_syllable(english_syllable(text)) / len(english_syllable(text))
+
+average_sentences = count_words(text) / sentences_in_text(text)
 
 
 def flesh(text):
@@ -162,11 +172,11 @@ def complexity_text(text):
     """The function determines the difficulty of the text to read."""
     match flesh(text):
         case _ if flesh(text) > 80:
-             return f"{lcl.VERY_EASY}"
+            return f"{lcl.VERY_EASY}"
         case _ if 50 < flesh(text) <= 80:
-             return f"{lcl.EASY}"
+            return f"{lcl.EASY}"
         case _ if 25 < flesh(text) <= 50:
-             return f"{lcl.HARD}"
+            return f"{lcl.HARD}"
         case _:
             return f"{lcl.VERY_HARD}"
 
@@ -176,7 +186,7 @@ def polarity_and_objectivity(text):
 
     Determines its tone and degree of objectivity.
     """
-    translator = Translator(from_lang = "ru", to_lang = "en")
+    translator = Translator(from_lang="ru", to_lang="en")
     eng_text = translator.translate(text)
 
     polarity = TextBlob(eng_text).sentiment.polarity
@@ -196,7 +206,7 @@ def polarity_and_objectivity(text):
 def main():
     print(f"{lcl.SENTENCES} {sentences_in_text(text)}")
     print(f"{lcl.WORDS} {count_words(text)}")
-    print(f"{lcl.SYLLABLES} {word_vowel(text)}")
+    print(f"{lcl.SYLLABLES} {syllable_en_rus(text)}")
     print(f"{lcl.AVERAGE_SENTENCES_LENGTH_IN_WORDS} {average_sentences}")
     print(f"{lcl.AVERAGE_WORD_LENGTH_IN_SYLLABLES} {average_len(text)}")
     print(f"{lcl.FLASH_READABILITY_INDEX} {flesh(text)}")
@@ -206,4 +216,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
